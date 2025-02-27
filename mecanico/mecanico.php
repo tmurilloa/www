@@ -3,16 +3,16 @@ include "../includes/header.php";
 ?>
 
 <!-- TÍTULO. Cambiarlo, pero dejar especificada la analogía -->
-<h1 class="mt-3">Entidad análoga a EMPRESA (NOMBRE)</h1>
+<h1 class="mt-3">Entidad MECANICO</h1>
 
 <!-- FORMULARIO. Cambiar los campos de acuerdo a su trabajo -->
 <div class="formulario p-4 m-3 border rounded-3">
 
-    <form action="empresa_insert.php" method="post" class="form-group">
+    <form action="mecanico_insert.php" method="post" class="form-group">
 
         <div class="mb-3">
-            <label for="nit" class="form-label">NIT</label>
-            <input type="number" class="form-control" id="nit" name="nit" required>
+            <label for="cedula" class="form-label">Cédula</label>
+            <input type="number" class="form-control" id="cedula" name="cedula" required>
         </div>
 
         <div class="mb-3">
@@ -21,31 +21,36 @@ include "../includes/header.php";
         </div>
 
         <div class="mb-3">
-            <label for="presupuesto" class="form-label">Presupuesto</label>
-            <input type="number" class="form-control" id="presupuesto" name="presupuesto" required>
+            <label for="salario" class="form-label">Salario</label>
+            <input type="salario" class="form-control" id="salario" name="salario" required>
         </div>
-        
-        <!-- Consultar la lista de clientes y desplegarlos -->
+
         <div class="mb-3">
-            <label for="cliente" class="form-label">Cliente</label>
-            <select name="cliente" id="cliente" class="form-select">
+            <label for="HojadeVida" class="form-label">Hoja de Vida</label>
+            <input type="HojadeVida" class="form-control" id="HojadeVida" name="HojadeVida" required>
+        </div>
+
+                <!-- Consultar la lista de empresas y desplegarlos -->
+        <div class="mb-3">
+            <label for="tallerAds" class="form-label">Taller</label>
+            <select name="tallerAds" id="tallerAds" class="form-select">
                 
                 <!-- Option por defecto -->
                 <option value="" selected disabled hidden></option>
 
                 <?php
                 // Importar el código del otro archivo
-                require("../cliente/cliente_select.php");
+                require("../taller/taller_select.php");
                 
                 // Verificar si llegan datos
-                if($resultadoCliente):
+                if($resultadoTaller):
                     
                     // Iterar sobre los registros que llegaron
-                    foreach ($resultadoCliente as $fila):
+                    foreach ($resultadoTaller as $fila):
                 ?>
 
-                <!-- Opción que se genera -->
-                <option value="<?= $fila["cedula"]; ?>"><?= $fila["nombre"]; ?> - C.C. <?= $fila["cedula"]; ?></option>
+                <!-- Opción que se genera MODIFICAR -->
+                <option value="<?= $fila["codigo"]; ?>"> nombre: <?=$fila["nombre"]; ?> - codigo: <?= $fila["codigo"]; ?></option>
 
                 <?php
                         // Cerrar los estructuras de control
@@ -63,10 +68,10 @@ include "../includes/header.php";
 
 <?php
 // Importar el código del otro archivo
-require("empresa_select.php");
+require("mecanico_select.php");
 
 // Verificar si llegan datos
-if($resultadoEmpresa and $resultadoEmpresa->num_rows > 0):
+if($resultadoMecanico and $resultadoMecanico->num_rows > 0):
 ?>
 
 <!-- MOSTRAR LA TABLA. Cambiar las cabeceras -->
@@ -77,11 +82,11 @@ if($resultadoEmpresa and $resultadoEmpresa->num_rows > 0):
         <!-- Títulos de la tabla, cambiarlos -->
         <thead class="table-dark">
             <tr>
-                <th scope="col" class="text-center">NIT</th>
+                <th scope="col" class="text-center">Cédula</th>
                 <th scope="col" class="text-center">Nombre</th>
-                <th scope="col" class="text-center">Presupuesto</th>
-                <th scope="col" class="text-center">Cliente</th>
-                <th scope="col" class="text-center">Acciones</th>
+                <th scope="col" class="text-center">salario</th>
+                <th scope="col" class="text-center">Hoja de Vida</th>
+                <th scope="col" class="text-center">Taller Adscrito</th>
             </tr>
         </thead>
 
@@ -89,21 +94,22 @@ if($resultadoEmpresa and $resultadoEmpresa->num_rows > 0):
 
             <?php
             // Iterar sobre los registros que llegaron
-            foreach ($resultadoEmpresa as $fila):
+            foreach ($resultadoMecanico as $fila):
             ?>
 
             <!-- Fila que se generará -->
             <tr>
                 <!-- Cada una de las columnas, con su valor correspondiente -->
-                <td class="text-center"><?= $fila["nit"]; ?></td>
+                <td class="text-center"><?= $fila["cedula"]; ?></td>
                 <td class="text-center"><?= $fila["nombre"]; ?></td>
-                <td class="text-center">$<?= $fila["presupuesto"]; ?></td>
-                <td class="text-center">C.C. <?= $fila["cliente"]; ?></td>
+                <td class="text-center"><?= $fila["salario"]; ?></td>
+                <td class="text-center"><?= $fila["hojadevida"]; ?></td>
+                <td class="text-center"><?= $fila["tallerAds"]; ?></td>
                 
                 <!-- Botón de eliminar. Debe de incluir la CP de la entidad para identificarla -->
                 <td class="text-center">
-                    <form action="empresa_delete.php" method="post">
-                        <input hidden type="text" name="nitEliminar" value="<?= $fila["nit"]; ?>">
+                    <form action="mecanico_delete.php" method="post">
+                        <input hidden type="text" name="cedulaEliminar" value="<?= $fila["cedula"]; ?>">
                         <button type="submit" class="btn btn-danger">Eliminar</button>
                     </form>
                 </td>

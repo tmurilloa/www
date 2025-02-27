@@ -4,12 +4,11 @@
 require('../config/conexion.php');
 
 // Sacar los datos del formulario. Cada input se identifica con su "name"
-$cedula = $_POST["cedula"];
+$codigo = $_POST["codigo"];
 $nombre = $_POST["nombre"];
-$celular = $_POST["celular"];
 
 // Query SQL a la BD. Si tienen que hacer comprobaciones, hacerlas acá (Generar una query diferente para casos especiales)
-$query = "INSERT INTO `cliente`(`cedula`,`nombre`, `celular`) VALUES ('$cedula', '$nombre', '$celular')";
+$query = "INSERT INTO `taller`(`codigo`,`nombre`) VALUES ('$codigo', '$nombre')";
 
 // Ejecutar consulta
 $result = mysqli_query($conn, $query) or die(mysqli_error($conn));
@@ -17,7 +16,7 @@ $result = mysqli_query($conn, $query) or die(mysqli_error($conn));
 // Redirigir al usuario a la misma pagina
 if($result):
     // Si fue exitosa, redirigirse de nuevo a la página de la entidad
-	header("Location: cliente.php");
+	header("Location: taller.php");
 else:
 	echo "Ha ocurrido un error al crear la persona";
 endif;
