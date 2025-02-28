@@ -6,9 +6,8 @@ include "../includes/header.php";
 <h1 class="mt-3">Búsqueda 2</h1>
 
 <p class="mt-3">
-    Dos números enteros n1 y n2, n1 ≥ 0, n2 > n1. Se debe mostrar el nit y el 
-    nombre de todas las empresas que han revisado entre n1 y n2 proyectos
-    (intervalo cerrado [n1, n2]).
+    El código de un taller. Se debe mostrar todos los datos de las reparaciones de
+    ese taller han requerido garantía.
 </p>
 
 <!-- FORMULARIO. Cambiar los campos de acuerdo a su trabajo -->
@@ -18,14 +17,14 @@ include "../includes/header.php";
     <form action="busqueda2.php" method="post" class="form-group">
 
         <div class="mb-3">
-            <label for="numero1" class="form-label">Numero 1</label>
-            <input type="number" class="form-control" id="numero1" name="numero1" required>
+            <label for="codigo_taller" class="form-label">Codigo Taller</label>
+            <input type="number" class="form-control" id="codigo_taller" name="codigo_taller" required>
         </div>
 
-        <div class="mb-3">
+        <!-- <div class="mb-3">
             <label for="numero2" class="form-label">Numero 2</label>
             <input type="number" class="form-control" id="numero2" name="numero2" required>
-        </div>
+        </div> -->
 
         <button type="submit" class="btn btn-primary">Buscar</button>
 
@@ -40,11 +39,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'):
     // Crear conexión con la BD
     require('../config/conexion.php');
 
-    $numero1 = $_POST["numero1"];
-    $numero2 = $_POST["numero2"];
+    $codigo_taller = $_POST["codigo_taller"];
+    // $numero2 = $_POST["numero2"];
 
     // Query SQL a la BD -> Crearla acá (No está completada, cambiarla a su contexto y a su analogía)
-    $query = "SELECT nit, nombre FROM empresa";
+    $query = "SELECT r.*
+            FROM reparacion r
+            INNER JOIN mecanico m ON r.mecanico = m.cedula
+            INNER JOIN taller t ON m.tallerads = t.codigo
+            WHERE t.codigo = $codigo_taller
+            AND r.codigo IN (
+                SELECT r2.reparacion_garantia
+                FROM reparacion r2
+                WHERE r2.reparacion_garantia != 0
+            )";
 
     // Ejecutar la consulta
     $resultadoB2 = mysqli_query($conn, $query) or die(mysqli_error($conn));
@@ -63,8 +71,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'):
         <!-- Títulos de la tabla, cambiarlos -->
         <thead class="table-dark">
             <tr>
-                <th scope="col" class="text-center">Cédula</th>
-                <th scope="col" class="text-center">Celular</th>
+                <th scope="col" class="text-center">Codigo</th>
+                <th scope="col" class="text-center">Fecha Creacion</th>
             </tr>
         </thead>
 
@@ -78,8 +86,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'):
             <!-- Fila que se generará -->
             <tr>
                 <!-- Cada una de las columnas, con su valor correspondiente -->
-                <td class="text-center"><?= $fila["cedula"]; ?></td>
-                <td class="text-center"><?= $fila["celular"]; ?></td>
+                <td class="text-center"><?= $fila["codigo"]; ?></td>
+                <td class="text-center"><?= $fila["fecha"]; ?></td>
             </tr>
 
             <?php

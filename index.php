@@ -46,8 +46,7 @@
             <li><a href="mecanico/mecanico.php">Entidad MECANICO</a></li>
             <li><a href="taller/taller.php">Entidad TALLER</a></li>
             <li><a href="reparacion/reparacion.php">Entidad REPARACION</a></li>
-            <li><a href="consultas/consulta1.php">Consulta 1</a></li>
-            <li><a href="consultas/consulta2.php">Consulta 2</a></li>
+            <li><a href="consultas/consulta1.php">Consultas</a></li>
             <li><a href="busqueda/busqueda1.php">Búsqueda 1</a></li>
             <li><a href="busqueda/busqueda2.php">Búsqueda 2</a></li>
         </ul>
