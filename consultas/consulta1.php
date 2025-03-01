@@ -3,7 +3,7 @@ include "../includes/header.php";
 ?>
 
 <!-- TÍTULO. Cambiarlo, pero dejar especificada la analogía -->
-<h1 class="mt-3">Consulta 1</h1>
+<h1 class="mt-3">Consulta 1 y 2</h1>
 
 <p class="mt-3">
 i. El primer botón debe mostrar los datos de las tres reparaciones de mayor valor junto con los datos de los mecánicos asociados a cada una de estas reparaciones (en caso de empates, usted decide cómo proceder).
@@ -16,8 +16,8 @@ ii. El segundo botón debe mostrar el código y el nombre de los talleres de los
 <!-- Formulario para los botones -->
 <div class="tabla mt-5 mx-3 rounded-3 overflow-hidden">
     <form method="POST">
-        <button type="submit" name="btn_3_reparaciones" class="btn btn-primary">3 reparaciones</button>
-        <button type="submit" name="btn_2_talleres" class="btn btn-primary">2 talleres</button>
+        <button type="submit" name="btn_3_reparaciones" class="btn btn-primary">Consulta 1</button>
+        <button type="submit" name="btn_2_talleres" class="btn btn-primary">Consulta 2</button>
     </form>
 </div>
 
